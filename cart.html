@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Cart | Moad Store</title>
+  <style>
+    body{margin:0;font-family:Arial;background:linear-gradient(135deg,#a1c4fd,#c2e9fb)}
+    header{background:#1b1f3b;color:#fff;padding:20px;text-align:center}
+    .container{max-width:1000px;margin:auto;padding:40px}
+    .item{background:#fff;border-radius:10px;padding:20px;margin-bottom:15px;display:flex;justify-content:space-between;align-items:center}
+    .total{font-size:22px;font-weight:bold;margin-top:20px}
+    a.button{display:inline-block;margin-top:30px;padding:12px 25px;background:#ff4ecd;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold}
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Your Shopping Cart</h1>
+</header>
+
+<div class="container" id="cartItems"></div>
+
+<div class="container">
+  <div class="total" id="total"></div>
+  <a href="style.html" class="button">← Back to Home</a>
+</div>
+
+<script>
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const box = document.getElementById('cartItems');
+  const totalBox = document.getElementById('total');
+  let sum = 0;
+
+  if (cart.length === 0) {
+    box.innerHTML = "<p>Your cart is empty 🛒</p>";
+    totalBox.innerText = "";
+  } else {
+    cart.forEach(p => {
+      const price = Number(p.price) || 0;
+      sum += price;
+
+      box.innerHTML += `
+        <div class="item">
+          <span>${p.name}</span>
+          <strong>$${price.toFixed(2)}</strong>
+        </div>
+      `;
+    });
+
+    totalBox.innerText = 'Total: $' + sum.toFixed(2);
+  }
+</script>
+
+</body>
+</html>
